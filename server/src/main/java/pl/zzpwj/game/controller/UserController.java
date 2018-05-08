@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
+    //todo catch for nulls
+
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
     private UserService userService;
@@ -34,7 +36,7 @@ public class UserController {
 
     @RequestMapping(value = "/api/users", method = RequestMethod.POST)
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) {
-        UserDto saved = userDtoMapper.mapToDto(userService.save(userDtoMapper.mapToEntity(userDto)));
+        UserDto saved = userDtoMapper.mapToDto(userService.register(userDtoMapper.mapToEntity(userDto)));
         return new ResponseEntity<>(saved, HttpStatus.OK);
     }
 

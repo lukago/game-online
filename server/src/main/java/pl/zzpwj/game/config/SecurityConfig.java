@@ -3,6 +3,7 @@ package pl.zzpwj.game.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,55 +18,37 @@ import pl.zzpwj.game.service.UserService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String[] AUTH_LIST = {
-            // -- swagger ui
-            "**/swagger-resources/**",
-            "/swagger-ui.html",
-            "/v2/api-docs",
-            "/webjars/**"
-    };
-
     private CustomLogoutSuccessHandler customLogoutSuccessHandler;
+    private UserDetailsBindService userDetailsService;
 
-    private UserService userService;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
+    @Autowired
+    public SecurityConfig(CustomLogoutSuccessHandler customLogoutSuccessHandler,
+                          UserDetailsBindService userDetailsService) {
+        this.customLogoutSuccessHandler = customLogoutSuccessHandler;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
     public UserDetailsService userDetailsServiceBean() throws Exception {
-        return new UserDetailsBindService(userService);
-    }
-
-    @Autowired
-    public SecurityConfig(CustomLogoutSuccessHandler customLogoutSuccessHandler, UserService userService) {
-        this.customLogoutSuccessHandler = customLogoutSuccessHandler;
-        this.userService = userService;
+        return userDetailsService;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(AUTH_LIST).authenticated()
-                .antMatchers("/api/users/**").hasAnyRole("USER")
-                .and()
-                .httpBasic().authenticationEntryPoint(swaggerAuthenticationEntryPoint())
+                .antMatchers(HttpMethod.DELETE, "/api/users/**").hasAnyRole("USER")
                 .and()
                 .formLogin()
                 .and()
                 .logout().logoutSuccessHandler(customLogoutSuccessHandler)
                 .and()
-                .csrf().disable();
+                .httpBasic();
     }
 
     @Bean
-    public BasicAuthenticationEntryPoint swaggerAuthenticationEntryPoint() {
-        BasicAuthenticationEntryPoint entryPoint = new BasicAuthenticationEntryPoint();
-        entryPoint.setRealmName("Swagger Realm");
-        return entryPoint;
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12);
     }
 
 }
