@@ -1,0 +1,46 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: game-online
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/gamedb
+    username: admin
+    password: admin
+    driverClassName: org.postgresql.Driver
+  security:
+    basic:
+      enabled: true
+    user:
+      name: admin
+      password: admin
+      role: ADMIN
+
+hibernate:
+  dialect: org.hibernate.dialect.PostgreSQLDialect
+  hbm2ddl.auto: update
+  ejb.naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+  show_sql: true
+  format_sql: true
+
+java:
+  version: 1.8
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    path: /
+
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.pracownia2018: DEBUG
+    org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl: WARN

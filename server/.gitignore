@@ -1,0 +1,8 @@
+# Intellij
+.idea/
+*.iml
+
+# Build
+target/
+webapp/*
+!webapp/WEB-INF/web.xml
