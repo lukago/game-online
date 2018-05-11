@@ -9,7 +9,7 @@ public class UserMapper implements IMapper<User, UserDto> {
 
     @Override
     public UserDto mapToDto(User entity) {
-        return new UserDto(entity.getLogin(), entity.getEmail());
+        return new UserDto(entity.getLogin(), entity.getEmail(), "");
     }
 
     @Override

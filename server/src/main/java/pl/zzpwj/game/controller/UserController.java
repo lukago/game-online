@@ -16,6 +16,7 @@ import pl.zzpwj.game.model.User;
 import pl.zzpwj.game.service.UserService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Controller
@@ -36,22 +37,38 @@ public class UserController {
 
     @RequestMapping(value = "/api/users", method = RequestMethod.POST)
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) {
-        UserDto saved = userDtoMapper.mapToDto(userService.register(userDtoMapper.mapToEntity(userDto)));
-        return new ResponseEntity<>(saved, HttpStatus.OK);
+        try {
+            UserDto saved = userDtoMapper.mapToDto(userService.register(userDtoMapper.mapToEntity(userDto)));
+            return new ResponseEntity<>(saved, HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.info("Exception: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(value = "/api/users/{login}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
-        userService.delete(userService.findOneByLogin(login));
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            userService.delete(login);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            LOG.info("Exception: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(value = "/api/users/{login}", method = RequestMethod.GET)
     public ResponseEntity<UserDto> getUser(@PathVariable String login) {
-        UserDto userDto = userDtoMapper.mapToDto(userService.findOneByLogin(login));
+        try {
+            UserDto userDto = userDtoMapper.mapToDto(userService.findOneByLogin(login));
 
-        LOG.info("User: {}", userDto);
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
+            LOG.info("User: {}", userDto);
+
+            return new ResponseEntity<>(userDto, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            LOG.info("Exception: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(value = "/api/users", method = RequestMethod.GET)

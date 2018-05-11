@@ -8,6 +8,7 @@ import pl.zzpwj.game.repository.IUserRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserService {
@@ -28,8 +29,8 @@ public class UserService {
     }
 
     @Transactional
-    public void delete(final User user) {
-        userRepository.delete(user);
+    public void delete(final String login) {
+        userRepository.delete(findOneByLogin(login));
     }
 
     public List<User> findAll() {
@@ -37,7 +38,7 @@ public class UserService {
     }
 
     public User findOneByLogin(final String login) {
-        return userRepository.findOneByLogin(login).orElse(null);
+        return userRepository.findOneByLogin(login).orElseThrow(NoSuchElementException::new);
     }
 
     public List<User> findAllByEmail(final String email) {
