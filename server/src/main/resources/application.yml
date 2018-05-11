@@ -12,8 +12,8 @@ spring:
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/gamedb
-    username: admin
-    password: admin
+    username: postgres
+    password:
     driverClassName: org.postgresql.Driver
   security:
     basic:
