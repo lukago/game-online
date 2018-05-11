@@ -17,7 +17,6 @@ import pl.zzpwj.game.service.UserService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     private CustomLogoutSuccessHandler customLogoutSuccessHandler;
     private UserDetailsBindService userDetailsService;
 

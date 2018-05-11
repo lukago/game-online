@@ -9,11 +9,10 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 public class GameOnlineApplication extends SpringBootServletInitializer {
-
-    private static final Logger log = LoggerFactory.getLogger(GameOnlineApplication.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GameOnlineApplication.class);
 
     public static void main(String[] args) {
-        log.info("Starting application");
+        LOG.info("Starting application");
         SpringApplication.run(GameOnlineApplication.class, args);
     }
 

@@ -12,7 +12,6 @@ import java.util.NoSuchElementException;
 
 @Service
 public class UserService {
-
     private IUserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
@@ -44,4 +43,5 @@ public class UserService {
     public List<User> findAllByEmail(final String email) {
         return userRepository.findAllByEmail(email);
     }
+
 }

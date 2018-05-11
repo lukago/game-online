@@ -17,7 +17,6 @@ import java.util.Set;
 @Service
 @Transactional
 public class UserDetailsBindService implements UserDetailsService {
-
     private IUserRepository userRepository;
 
     @Autowired

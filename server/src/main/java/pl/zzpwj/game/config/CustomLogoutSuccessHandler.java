@@ -13,13 +13,13 @@ import java.io.IOException;
 
 @Component
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static Logger LOG = LoggerFactory.getLogger(CustomLogoutSuccessHandler.class);
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request,
                                 HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
-        logger.info("Logout successful with principal: " + authentication.getName());
+        LOG.info("Logout successful with principal: " + authentication.getName());
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.sendRedirect("/");

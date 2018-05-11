@@ -21,12 +21,8 @@ import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
-    //todo catch for nulls
-
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
-
     private UserService userService;
-
     private UserMapper userDtoMapper;
 
     @Autowired
