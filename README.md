@@ -1,6 +1,8 @@
 # game-online
 Online game 
 
+[![Build Status](https://travis-ci.com/lukago/game-online.svg?token=tsv9JMKpCY8piyBJajzn&branch=develop)](https://travis-ci.com/lukago/game-online)
+
 # Installation 
 1. Install postgreSQL and Node.js
 2. Create local database in postgres:
