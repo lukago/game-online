@@ -1,2 +1,6 @@
 install: ./install-deps.sh
 script: ./build.sh
+branches:
+  only:
+  - master
+  - develop
