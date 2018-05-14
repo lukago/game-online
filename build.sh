@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cd client
-npm run build
+ng build
 cd ../server
 mvn clean install
 cd ..
