@@ -135,7 +135,7 @@
                         </goals>
                         <configuration>
                             <overwrite>true</overwrite>
-                            <outputDirectory>${project.basedir}/src/main/webapp/</outputDirectory>
+                            <outputDirectory>${project.basedir}/src/main/resources/static/</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${project.basedir}/../client/dist</directory>

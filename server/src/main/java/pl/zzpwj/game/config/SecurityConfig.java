@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import pl.zzpwj.game.service.UserDetailsBindService;
-import pl.zzpwj.game.service.UserService;
 
 @Configuration
 @EnableWebSecurity

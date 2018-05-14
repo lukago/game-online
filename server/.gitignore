@@ -4,5 +4,4 @@
 
 # Build
 target/
-src/main/webapp/*
-!src/main/webapp/WEB-INF/web.xml
+static/

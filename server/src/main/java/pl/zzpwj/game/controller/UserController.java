@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-@Controller
 @CrossOrigin(origins = "http://localhost:4200")
+@Controller
 public class UserController {
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
     private UserService userService;
