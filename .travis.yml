@@ -1,5 +1,4 @@
-install: ./install-deps.sh
-script: ./build.sh
+language: java
 branches:
   only:
   - master
