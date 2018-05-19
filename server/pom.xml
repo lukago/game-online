@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pl.zzpwj</groupId>
-    <artifactId>game-online</artifactId>
+    <artifactId>server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>game-online</name>
-    <description>Online game project</description>
+    <name>server</name>
+    <description>Online game backend</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -88,6 +88,7 @@
     </dependencies>
 
     <build>
+        <finalName>game-online-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -96,6 +97,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
