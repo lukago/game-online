@@ -40,14 +40,15 @@
           </execution>
 
           <execution>
-            <id>ng build</id>
+            <id>npm run build</id>
             <goals>
               <goal>exec</goal>
             </goals>
             <phase>generate-resources</phase>
             <configuration>
-              <executable>ng</executable>
+              <executable>npm</executable>
               <arguments>
+                <argument>run</argument>
                 <argument>build</argument>
               </arguments>
             </configuration>
