@@ -2,6 +2,7 @@ package engine;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 /**
  * Keeps track of player's shots results and battlefield's state.
@@ -27,7 +28,29 @@ public class PlayerBoard {
     }
 
     private FieldState[][] stateBoard;
-    private FieldState[][] aimBoard;
+    private ShotResult[][] shotResults;
+
+    /**
+     * Gets a copy of current board state.
+     * @return Two dimensional array with battlefield data.
+     */
+    public FieldState[][] getBoardState() {
+        FieldState[][] copy = new FieldState[stateBoard.length][stateBoard.length];
+        IntStream.range(0, stateBoard.length)
+                .forEach(i -> System.arraycopy(copy[i], 0, stateBoard[i], 0, stateBoard[i].length));
+        return copy;
+    }
+
+    /**
+     * Gets a copy of current shots state.
+     * @return Two dimensional array with past shots data.
+     */
+    public ShotResult[][] getShotResults() {
+        ShotResult[][] copy = new ShotResult[shotResults.length][shotResults.length];
+        IntStream.range(0, shotResults.length)
+                .forEach(i -> System.arraycopy(copy[i], 0, shotResults[i], 0, shotResults[i].length));
+        return copy;
+    }
 
     /**
      * Creates new 10x10 board instance with battleships on given positions.
@@ -54,31 +77,31 @@ public class PlayerBoard {
     /**
      * Creates new 10x10 board instance from archival state data.
      *
-     * @param stateBoard archival state of player's board
-     * @param aimBoard   archival state of player's shot results
+     * @param stateBoard  archival state of player's board
+     * @param shotResults archival state of player's shot results
      */
-    public PlayerBoard(FieldState[][] stateBoard, FieldState[][] aimBoard) {
-        this(stateBoard, aimBoard, 10);
+    public PlayerBoard(FieldState[][] stateBoard, ShotResult[][] shotResults) {
+        this(stateBoard, shotResults, 10);
     }
 
     /**
      * Creates new board instance from archival state data.
      *
      * @param stateBoard archival state of player's board
-     * @param aimBoard   archival state of player's shot results
+     * @param shotResults   archival state of player's shot results
      * @param size       size of the board
      */
-    public PlayerBoard(FieldState[][] stateBoard, FieldState[][] aimBoard, int size) {
+    public PlayerBoard(FieldState[][] stateBoard, ShotResult[][] shotResults, int size) {
         this(size);
         this.stateBoard = stateBoard;
-        this.aimBoard = aimBoard;
+        this.shotResults = shotResults;
     }
 
     private PlayerBoard(int size) {
         stateBoard = new FieldState[size][size];
-        Arrays.stream(stateBoard).flatMap(s-> Arrays.stream(s)).forEach(s->s=FieldState.Clear);
-        aimBoard = new FieldState[size][size];
-        Arrays.stream(aimBoard).flatMap(s-> Arrays.stream(s)).forEach(s->s=FieldState.Clear);
+        Arrays.stream(stateBoard).flatMap(s -> Arrays.stream(s)).forEach(s -> s = FieldState.Clear);
+        shotResults = new ShotResult[size][size];
+        Arrays.stream(shotResults).flatMap(s -> Arrays.stream(s)).forEach(s -> s = ShotResult.None);
     }
 
     /**
@@ -101,7 +124,14 @@ public class PlayerBoard {
      * @return shot state whether it hit, miss or sank a battleship.
      */
     public ShotResult shot(Point coords) {
-        return null;
+        if (stateBoard[coords.x][coords.y] == FieldState.BattleshipPart) {
+            stateBoard[coords.x][coords.y] = FieldState.SunkBattleshipPart;
+
+            //TODO check if whole ship has sunk
+            return ShotResult.Hit;
+        } else {
+            return ShotResult.Miss;
+        }
     }
 
     /**
@@ -111,6 +141,6 @@ public class PlayerBoard {
      * @param result type of result that is being marked
      */
     public void markFriendlyShot(Point coords, ShotResult result) {
-
+        shotResults[coords.x][coords.y] = result;
     }
 }

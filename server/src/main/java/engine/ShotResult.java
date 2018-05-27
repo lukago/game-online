@@ -5,6 +5,10 @@ package engine;
  */
 public enum ShotResult{
     /**
+     * Empty result - shot has not been fired yet.
+     */
+    None,
+    /**
      * Shot hit water and did not damage ay battleship.
      */
     Miss,
