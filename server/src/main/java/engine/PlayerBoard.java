@@ -1,14 +1,15 @@
 package engine;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Keeps track of player's shots results and battlefield's state.
  */
 public class PlayerBoard {
-
     /**
      * Instantiates new board if the validation of given constraints is passed.
      *
@@ -17,7 +18,7 @@ public class PlayerBoard {
      * @return instance of board generated from given settings
      * @throws InstantiationException if the validation fails
      */
-    public static PlayerBoard setup(Point[] battleshipsPositions, BoardConstraints boardConstraints) throws InstantiationException {
+    public static PlayerBoard setup(Point[][] battleshipsPositions, BoardConstraints boardConstraints) throws InstantiationException {
         //validate setup
         boolean isValid = true;
 
@@ -27,6 +28,7 @@ public class PlayerBoard {
         return new PlayerBoard(battleshipsPositions);
     }
 
+    private Point[][] battleships;
     private FieldState[][] stateBoard;
     private ShotResult[][] shotResults;
 
@@ -57,7 +59,7 @@ public class PlayerBoard {
      *
      * @param battleshipsPositions positions of fields that store battleships
      */
-    public PlayerBoard(Point[] battleshipsPositions) {
+    public PlayerBoard(Point[][] battleshipsPositions) {
         this(battleshipsPositions, 10);
     }
 
@@ -67,11 +69,15 @@ public class PlayerBoard {
      * @param battleshipsPositions positions of fields that store battleships
      * @param size                 board size
      */
-    public PlayerBoard(Point[] battleshipsPositions, int size) {
+    public PlayerBoard(Point[][] battleshipsPositions, int size) {
         this(size);
+
         Arrays.stream(battleshipsPositions)
+                .flatMap(b -> Arrays.stream(b))
                 .forEach(position ->
                         stateBoard[position.x][position.y] = FieldState.BattleshipPart);
+
+        battleships = battleshipsPositions;
     }
 
     /**
@@ -126,12 +132,25 @@ public class PlayerBoard {
     public ShotResult shot(Point coords) {
         if (stateBoard[coords.x][coords.y] == FieldState.BattleshipPart) {
             stateBoard[coords.x][coords.y] = FieldState.SunkBattleshipPart;
-
+            if (isShipSunk(coords))
+                return ShotResult.HitAndSunk;
             //TODO check if whole ship has sunk
             return ShotResult.Hit;
         } else {
             return ShotResult.Miss;
         }
+    }
+
+    /**
+     * Finds other battleship's parts and determines whether its sunk or not
+     *
+     * @param coords Battleship's field position
+     * @return whether the whole ship is sunk or not
+     */
+    private boolean isShipSunk(Point coords) {
+        Stream<Point> shipParts = Arrays.stream(battleships)
+                .filter(b -> Arrays.stream(b).anyMatch(p -> p.x==coords.x && p.y==coords.y)).flatMap(s-> Arrays.stream(s));
+        return shipParts.allMatch(s -> stateBoard[s.x][s.y] == FieldState.SunkBattleshipPart);
     }
 
     /**

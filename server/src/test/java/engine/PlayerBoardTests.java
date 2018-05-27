@@ -43,11 +43,11 @@ public class PlayerBoardTests {
     @Test
     public void givenPositionsConstructorTest() {
         // Arrange
-        Point[] battleshipsPositions = new Point[]{
-                new Point(1, 1),
-                new Point(1, 2),
-                new Point(1, 3),
-                new Point(8, 8),
+        Point[][] battleshipsPositions = new Point[][]{
+                new Point[]{new Point(1, 1)},
+                new Point[]{new Point(1, 2)},
+                new Point[]{new Point(1, 3)},
+                new Point[]{new Point(8, 8)},
         };
 
         // Act
@@ -93,7 +93,7 @@ public class PlayerBoardTests {
     @Test
     public void markFriendlyShotTest() {
         // Arrange
-        PlayerBoard board = new PlayerBoard(new Point[0]);
+        PlayerBoard board = new PlayerBoard(new Point[0][]);
 
         // Act
         board.markFriendlyShot(new Point(2, 2), ShotResult.Hit);
@@ -106,7 +106,7 @@ public class PlayerBoardTests {
     @Test
     public void shot_Miss_Test() {
         // Arrange
-        PlayerBoard board = new PlayerBoard(new Point[0]);
+        PlayerBoard board = new PlayerBoard(new Point[0][]);
 
         // Act
         ShotResult result = board.shot(new Point(2, 2));
@@ -120,7 +120,7 @@ public class PlayerBoardTests {
     @Test
     public void shot_Hit_Test() {
         // Arrange
-        PlayerBoard board = new PlayerBoard(new Point[]{new Point(2, 2),new Point(2, 3)});
+        PlayerBoard board = new PlayerBoard(new Point[][]{new Point[]{new Point(2, 2), new Point(2, 3)}});
 
         // Act
         ShotResult result = board.shot(new Point(2, 2));
@@ -134,14 +134,16 @@ public class PlayerBoardTests {
     @Test
     public void shot_HitAndSunk_Test() {
         // Arrange
-        PlayerBoard board = new PlayerBoard(new Point[]{new Point(2, 2)});
+        PlayerBoard board = new PlayerBoard(new Point[][]{new Point[]{new Point(2, 2), new Point(2, 3)}});
 
         // Act
-        ShotResult result = board.shot(new Point(2, 2));
+        ShotResult firstShotResult = board.shot(new Point(2, 2));
+        ShotResult secondShotResult = board.shot(new Point(2, 3));
         FieldState[][] boardState = board.getBoardState();
 
         // Assert
-        Assert.assertEquals(ShotResult.HitAndSunk, result);
+        Assert.assertEquals(ShotResult.Hit, firstShotResult);
+        Assert.assertEquals(ShotResult.HitAndSunk, secondShotResult);
         Assert.assertEquals(FieldState.SunkBattleshipPart, boardState[2][2]);
     }
 }
