@@ -19,7 +19,19 @@ public class PlayerBoard {
      * @throws InstantiationException if the validation fails
      */
     public static PlayerBoard setup(Point[][] battleshipsPositions, BoardConstraints boardConstraints) throws InstantiationException {
+        if (boardConstraints == null)
+            boardConstraints = BoardConstraints.getDefault();
+
         //validate setup
+        // check if ships are in range of board
+        // check if ships are in one line without breaks
+
+        //
+        // check board constraints
+        // check if ship counts is ok
+        // check if spaces between ships are ok
+
+
         boolean isValid = true;
 
         if (!isValid)
@@ -149,7 +161,7 @@ public class PlayerBoard {
      */
     private boolean isShipSunk(Point coords) {
         Stream<Point> shipParts = Arrays.stream(battleships)
-                .filter(b -> Arrays.stream(b).anyMatch(p -> p.x==coords.x && p.y==coords.y)).flatMap(s-> Arrays.stream(s));
+                .filter(b -> Arrays.stream(b).anyMatch(p -> p.x == coords.x && p.y == coords.y)).flatMap(s -> Arrays.stream(s));
         return shipParts.allMatch(s -> stateBoard[s.x][s.y] == FieldState.SunkBattleshipPart);
     }
 
