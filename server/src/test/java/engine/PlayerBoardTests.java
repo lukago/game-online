@@ -132,6 +132,20 @@ public class PlayerBoardTests {
     }
 
     @Test
+    public void shot_Sunk_Test() {
+        // Arrange
+        PlayerBoard board = new PlayerBoard(new Point[][]{new Point[]{new Point(2, 2)}});
+
+        // Act
+        ShotResult result = board.shot(new Point(2, 2));
+        FieldState[][] boardState = board.getBoardState();
+
+        // Assert
+        Assert.assertEquals(ShotResult.HitAndSunk, result);
+        Assert.assertEquals(FieldState.SunkBattleshipPart, boardState[2][2]);
+    }
+
+    @Test
     public void shot_HitAndSunk_Test() {
         // Arrange
         PlayerBoard board = new PlayerBoard(new Point[][]{new Point[]{new Point(2, 2), new Point(2, 3)}});
@@ -145,5 +159,6 @@ public class PlayerBoardTests {
         Assert.assertEquals(ShotResult.Hit, firstShotResult);
         Assert.assertEquals(ShotResult.HitAndSunk, secondShotResult);
         Assert.assertEquals(FieldState.SunkBattleshipPart, boardState[2][2]);
+        Assert.assertEquals(FieldState.SunkBattleshipPart, boardState[2][3]);
     }
 }
