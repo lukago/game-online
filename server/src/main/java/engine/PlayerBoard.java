@@ -32,23 +32,23 @@ public class PlayerBoard {
 
     /**
      * Gets a copy of current board state.
+     *
      * @return Two dimensional array with battlefield data.
      */
     public FieldState[][] getBoardState() {
         FieldState[][] copy = new FieldState[stateBoard.length][stateBoard.length];
-        IntStream.range(0, stateBoard.length)
-                .forEach(i -> System.arraycopy(copy[i], 0, stateBoard[i], 0, stateBoard[i].length));
+        IntStream.range(0, stateBoard.length).forEach(i -> copy[i] = Arrays.copyOf(stateBoard[i], stateBoard[i].length));
         return copy;
     }
 
     /**
      * Gets a copy of current shots state.
+     *
      * @return Two dimensional array with past shots data.
      */
     public ShotResult[][] getShotResults() {
         ShotResult[][] copy = new ShotResult[shotResults.length][shotResults.length];
-        IntStream.range(0, shotResults.length)
-                .forEach(i -> System.arraycopy(copy[i], 0, shotResults[i], 0, shotResults[i].length));
+        IntStream.range(0, shotResults.length).forEach(i -> copy[i] = Arrays.copyOf(shotResults[i], shotResults[i].length));
         return copy;
     }
 
@@ -87,9 +87,9 @@ public class PlayerBoard {
     /**
      * Creates new board instance from archival state data.
      *
-     * @param stateBoard archival state of player's board
-     * @param shotResults   archival state of player's shot results
-     * @param size       size of the board
+     * @param stateBoard  archival state of player's board
+     * @param shotResults archival state of player's shot results
+     * @param size        size of the board
      */
     public PlayerBoard(FieldState[][] stateBoard, ShotResult[][] shotResults, int size) {
         this(size);
@@ -99,9 +99,9 @@ public class PlayerBoard {
 
     private PlayerBoard(int size) {
         stateBoard = new FieldState[size][size];
-        Arrays.stream(stateBoard).flatMap(s -> Arrays.stream(s)).forEach(s -> s = FieldState.Clear);
+        Arrays.stream(stateBoard).forEach(s -> Arrays.fill(s, FieldState.Clear));
         shotResults = new ShotResult[size][size];
-        Arrays.stream(shotResults).flatMap(s -> Arrays.stream(s)).forEach(s -> s = ShotResult.None);
+        Arrays.stream(shotResults).forEach(s -> Arrays.fill(s, ShotResult.None));
     }
 
     /**

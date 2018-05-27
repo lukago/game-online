@@ -1,10 +1,11 @@
 package engine;
 
+import com.thoughtworks.xstream.core.util.Fields;
 import org.junit.Assert;
 import org.junit.Test;
-import org.sonatype.inject.Parameters;
 
 import java.awt.*;
+import java.lang.reflect.Field;
 
 public class PlayerBoardTests {
 
@@ -56,7 +57,7 @@ public class PlayerBoardTests {
     }
 
     @Test
-    public void getBoardStateTest(){
+    public void getBoardStateTest() {
         // Arrange
         FieldState[][] stateBoard = new FieldState[10][10];
         stateBoard[1][1] = FieldState.BattleshipPart;
@@ -73,7 +74,7 @@ public class PlayerBoardTests {
     }
 
     @Test
-    public void getShotResultsTest(){
+    public void getShotResultsTest() {
         // Arrange
         ShotResult[][] shotResults = new ShotResult[10][10];
         shotResults[1][1] = ShotResult.Miss;
@@ -89,4 +90,58 @@ public class PlayerBoardTests {
         Assert.assertArrayEquals(shotResults, result);
     }
 
+    @Test
+    public void markFriendlyShotTest() {
+        // Arrange
+        PlayerBoard board = new PlayerBoard(new Point[0]);
+
+        // Act
+        board.markFriendlyShot(new Point(2, 2), ShotResult.Hit);
+        ShotResult[][] result = board.getShotResults();
+
+        // Assert
+        Assert.assertEquals(ShotResult.Hit, result[2][2]);
+    }
+
+    @Test
+    public void shot_Miss_Test() {
+        // Arrange
+        PlayerBoard board = new PlayerBoard(new Point[0]);
+
+        // Act
+        ShotResult result = board.shot(new Point(2, 2));
+        FieldState[][] boardState = board.getBoardState();
+
+        // Assert
+        Assert.assertEquals(ShotResult.Miss, result);
+        Assert.assertEquals(FieldState.Clear, boardState[2][2]);
+    }
+
+    @Test
+    public void shot_Hit_Test() {
+        // Arrange
+        PlayerBoard board = new PlayerBoard(new Point[]{new Point(2, 2),new Point(2, 3)});
+
+        // Act
+        ShotResult result = board.shot(new Point(2, 2));
+        FieldState[][] boardState = board.getBoardState();
+
+        // Assert
+        Assert.assertEquals(ShotResult.Hit, result);
+        Assert.assertEquals(FieldState.SunkBattleshipPart, boardState[2][2]);
+    }
+
+    @Test
+    public void shot_HitAndSunk_Test() {
+        // Arrange
+        PlayerBoard board = new PlayerBoard(new Point[]{new Point(2, 2)});
+
+        // Act
+        ShotResult result = board.shot(new Point(2, 2));
+        FieldState[][] boardState = board.getBoardState();
+
+        // Assert
+        Assert.assertEquals(ShotResult.HitAndSunk, result);
+        Assert.assertEquals(FieldState.SunkBattleshipPart, boardState[2][2]);
+    }
 }
