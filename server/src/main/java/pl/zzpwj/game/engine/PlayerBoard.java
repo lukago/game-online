@@ -1,7 +1,5 @@
-package engine;
+package pl.zzpwj.game.engine;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;

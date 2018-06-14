@@ -1,8 +1,7 @@
-package engine;
+package pl.zzpwj.game.engine;
 
 public enum FieldState {
     Clear,
-    Shot,
     BattleshipPart,
     SunkBattleshipPart
 }

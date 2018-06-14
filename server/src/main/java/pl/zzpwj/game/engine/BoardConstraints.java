@@ -1,14 +1,15 @@
-package engine;
+package pl.zzpwj.game.engine;
 
-import javafx.util.Pair;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Arrays;
 
+
 /**
  * Defines set of rules of new battleships board validation.
  */
+
 public class BoardConstraints {
 
     public static BoardConstraints getDefault() {

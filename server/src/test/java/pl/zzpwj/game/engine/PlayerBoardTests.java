@@ -1,11 +1,9 @@
-package engine;
+package pl.zzpwj.game.engine;
 
-import com.thoughtworks.xstream.core.util.Fields;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.awt.*;
-import java.lang.reflect.Field;
 
 public class PlayerBoardTests {
 

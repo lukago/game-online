@@ -1,4 +1,4 @@
-package engine;
+package pl.zzpwj.game.engine;
 
 /**
  * Describes the outcome of shot on the board.
