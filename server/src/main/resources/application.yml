@@ -13,7 +13,7 @@ spring:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/gamedb
     username: postgres
-    password:
+    password: asdf
     driverClassName: org.postgresql.Driver
   security:
     basic:
