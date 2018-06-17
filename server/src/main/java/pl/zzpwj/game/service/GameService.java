@@ -12,7 +12,8 @@ public class GameService {
     private PlayerBoard playerBoard;
 
     @Autowired
-    public GameService() {}
+    public GameService() {
+    }
 
     public PlayerBoard setupBoard(Point[][] battleshipPositions) throws InstantiationException {
         this.playerBoard = PlayerBoard.setup(battleshipPositions, null);

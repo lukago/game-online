@@ -8,19 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.zzpwj.game.dto.PlayerBoardDto;
-import pl.zzpwj.game.dto.UserDto;
 import pl.zzpwj.game.engine.FieldState;
 import pl.zzpwj.game.engine.Point;
 import pl.zzpwj.game.engine.ShotResult;
 import pl.zzpwj.game.mapper.PlayerBoardMapper;
-import pl.zzpwj.game.mapper.UserMapper;
-import pl.zzpwj.game.model.User;
 import pl.zzpwj.game.service.GameService;
-import pl.zzpwj.game.service.UserService;
-
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/game")
@@ -61,7 +53,7 @@ public class GameController {
     @RequestMapping(value = "/shoot/{x}/{y}", method = RequestMethod.GET)
     public ResponseEntity<ShotResult> shoot(@PathVariable int x, @PathVariable int y) {
         try {
-            ShotResult shotResult = gameService.shoot(new Point(x,y));
+            ShotResult shotResult = gameService.shoot(new Point(x, y));
             return new ResponseEntity<>(shotResult, HttpStatus.OK);
         } catch (Exception e) {
             LOG.info("Exception: {}", e.getMessage());

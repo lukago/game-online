@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.zzpwj.game.engine.FieldState;
-import pl.zzpwj.game.engine.Point;
 import pl.zzpwj.game.engine.ShotResult;
 
 @Getter
