@@ -139,7 +139,7 @@ public class PlayerBoard {
      * @param coords shot position
      * @return shot state whether it hit, miss or sank a battleship.
      */
-    public ShotResult shot(Point coords) {
+    public ShotResult shoot(Point coords) {
         if (stateBoard[coords.x][coords.y] == FieldState.BattleshipPart) {
             stateBoard[coords.x][coords.y] = FieldState.SunkBattleshipPart;
             if (isShipSunk(coords))

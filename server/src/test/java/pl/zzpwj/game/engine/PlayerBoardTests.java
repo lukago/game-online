@@ -3,8 +3,6 @@ package pl.zzpwj.game.engine;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.awt.*;
-
 public class PlayerBoardTests {
 
     @Test
@@ -107,7 +105,7 @@ public class PlayerBoardTests {
         PlayerBoard board = new PlayerBoard(new Point[0][]);
 
         // Act
-        ShotResult result = board.shot(new Point(2, 2));
+        ShotResult result = board.shoot(new Point(2, 2));
         FieldState[][] boardState = board.getBoardState();
 
         // Assert
@@ -121,7 +119,7 @@ public class PlayerBoardTests {
         PlayerBoard board = new PlayerBoard(new Point[][]{new Point[]{new Point(2, 2), new Point(2, 3)}});
 
         // Act
-        ShotResult result = board.shot(new Point(2, 2));
+        ShotResult result = board.shoot(new Point(2, 2));
         FieldState[][] boardState = board.getBoardState();
 
         // Assert
@@ -135,7 +133,7 @@ public class PlayerBoardTests {
         PlayerBoard board = new PlayerBoard(new Point[][]{new Point[]{new Point(2, 2)}});
 
         // Act
-        ShotResult result = board.shot(new Point(2, 2));
+        ShotResult result = board.shoot(new Point(2, 2));
         FieldState[][] boardState = board.getBoardState();
 
         // Assert
@@ -149,8 +147,8 @@ public class PlayerBoardTests {
         PlayerBoard board = new PlayerBoard(new Point[][]{new Point[]{new Point(2, 2), new Point(2, 3)}});
 
         // Act
-        ShotResult firstShotResult = board.shot(new Point(2, 2));
-        ShotResult secondShotResult = board.shot(new Point(2, 3));
+        ShotResult firstShotResult = board.shoot(new Point(2, 2));
+        ShotResult secondShotResult = board.shoot(new Point(2, 3));
         FieldState[][] boardState = board.getBoardState();
 
         // Assert
